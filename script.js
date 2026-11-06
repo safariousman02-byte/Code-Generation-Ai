@@ -1,10 +1,18 @@
-import { GoogleGenAI } from "@google/genai";
+async function askAI(prompt) {
+  const response = await fetch("https://text.pollinations.ai/openai", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      model: "openai",
+      messages: [{ role: "user", content: prompt }],
+    }),
+  });
 
-const ai = new GoogleGenAI({});
+  const data = await response.json();
+  console.log(data.choices[0].message.content);
+}
 
-const interaction = await ai.interactions.create({
-  model: "gemini-4-argon",
-  input: "Explain how AI works in a few words",
-});
-
-console.log(interaction.output_text);
+// Test it
+askAI("Explain AI in one sentence.");
