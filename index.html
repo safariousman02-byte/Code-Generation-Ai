@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>NeutraX — Studio</title>
+    <title>neutraX · Spatial AI Agent Studio</title>
     <link rel="stylesheet" href="style.css" />
 
     <!-- Fonts -->
@@ -21,25 +21,84 @@
     />
   </head>
   <body>
+    <!-- Overlay to dim the background when drawer is open -->
+    <div class="overlay" id="overlay"></div>
+
+    <!-- ══════════════════════════════════════════════
+       RECENTS & SETTINGS DRAWER
+       ══════════════════════════════════════════════ -->
+    <aside class="drawer" id="drawer">
+      <div class="drawer-header">
+        <h2>Recents & Settings</h2>
+        <button class="icon-btn" id="closeDrawer">
+          <span class="material-symbols-rounded">close</span>
+        </button>
+      </div>
+
+      <div class="drawer-content">
+        <span class="label">Recent Sessions</span>
+        <ul class="recent-list">
+          <li>
+            <div class="recent-icon active">
+              <span class="material-symbols-rounded">memory</span>
+            </div>
+            <div class="recent-info">
+              <strong>#04 Autonomous Spatial Designer</strong>
+              <span>1,420 tk · 4 artifacts</span>
+            </div>
+          </li>
+          <li>
+            <div class="recent-icon">
+              <span class="material-symbols-rounded">code</span>
+            </div>
+            <div class="recent-info">
+              <strong>#03 3D WebGL Shader Matrix</strong>
+              <span>890 tk · 2 artifacts</span>
+            </div>
+          </li>
+          <li>
+            <div class="recent-icon">
+              <span class="material-symbols-rounded">smart_toy</span>
+            </div>
+            <div class="recent-info">
+              <strong>#02 Multi-agent Backend Orchestrator</strong>
+              <span>2,100 tk · 6 artifacts</span>
+            </div>
+          </li>
+        </ul>
+
+        <span class="label" style="margin-top: 24px">Telemetry & Memory</span>
+        <div class="settings-list">
+          <label class="toggle-row">
+            <span>Auto-save queries</span>
+            <input type="checkbox" checked />
+          </label>
+          <label class="toggle-row">
+            <span>Cache model state</span>
+            <input type="checkbox" checked />
+          </label>
+        </div>
+      </div>
+    </aside>
+
+    <!-- ══════════════════════════════════════════════
+       MAIN APP CONTAINER
+       ══════════════════════════════════════════════ -->
     <div class="app-container">
-      <!-- TOP HEADER -->
+      <!-- TOP NAVIGATION -->
       <header class="topbar">
+        <button class="icon-btn" id="openDrawer">
+          <span class="material-symbols-rounded">menu</span>
+        </button>
+
         <div class="brand">
-          <div class="brand-logo">
-            <span class="material-symbols-rounded">blur_on</span>
-          </div>
-          <div class="brand-text">
-            <span class="brand-name">neutra<span class="accent">X</span></span>
-            <span class="brand-logo-text">Logo</span>
-          </div>
+          <span class="brand-name">neutra<span class="accent">X</span></span>
+          <span class="brand-sub">Spatial AI Agent</span>
         </div>
 
         <div class="topbar-actions">
           <button class="btn btn-primary">
             <span class="material-symbols-rounded">add</span> New
-          </button>
-          <button class="btn btn-secondary">
-            <span class="material-symbols-rounded">share</span>
           </button>
           <button class="btn btn-secondary avatar-btn">
             <span class="material-symbols-rounded">person</span>
@@ -47,261 +106,53 @@
         </div>
       </header>
 
-      <!-- ══════════════════════════════════════════════
-         SESSION CARD
-         ══════════════════════════════════════════════ -->
-      <section class="glass-panel session-card">
-        <div class="session-header">
-          <div class="session-icon">
-            <span class="material-symbols-rounded">memory</span>
+      <!-- CENTERED WORKSPACE (Greeting & Prompt) -->
+      <main class="workspace">
+        <!-- Greeting -->
+        <div class="greeting">
+          <div class="greeting-icon">
+            <span class="material-symbols-rounded">blur_on</span>
           </div>
-          <h1 class="session-title">Session #04: Autonomous Spatial De...</h1>
+          <h1>Hi Safari, how can I help you today!</h1>
         </div>
 
-        <div class="session-status-row">
-          <span class="status-badge active">
-            <span class="dot cyan"></span> Active State
-          </span>
-        </div>
+        <!-- Chat History Area (Hidden until user sends a message) -->
+        <div class="chat-history" id="chatHistory"></div>
 
-        <div class="session-meta">
-          <span
-            ><span class="material-symbols-rounded">schedule</span> Saved 42m
-            ago</span
-          >
-          <span
-            ><span class="material-symbols-rounded">folder</span> 4 artifacts
-            generated</span
-          >
-        </div>
+        <!-- PROMPT DOCK (The Centerpiece) -->
+        <div class="prompt-dock">
+          <div class="prompt-input-row">
+            <button class="icon-btn small">
+              <span class="material-symbols-rounded">add</span>
+            </button>
+            <button class="icon-btn small">
+              <span class="material-symbols-rounded">attachment</span>
+            </button>
 
-        <div class="session-tags">
-          <span class="pill dark">
-            <span class="material-symbols-rounded">network_node</span> Neural
-            Core v4.2 <span class="dim">18ms</span>
-            <span class="accent">99.4% acc</span>
-          </span>
-        </div>
+            <textarea
+              id="userInput"
+              placeholder="Ask neutraX anything or describe an autonomous workflow..."
+              rows="1"
+            ></textarea>
 
-        <div class="session-badges">
-          <span class="pill gradient-purple">Creative Synth</span>
-          <span class="pill gradient-cyan">Deep Reason</span>
-        </div>
-      </section>
-
-      <!-- ══════════════════════════════════════════════
-         USER DIRECTIVE
-         ══════════════════════════════════════════════ -->
-      <div class="section-header">
-        <span class="label">User Directive</span>
-        <span class="time">14:02 PM</span>
-      </div>
-
-      <section class="glass-panel directive-card">
-        <div class="directive-icon">
-          <span class="material-symbols-rounded">person</span>
-        </div>
-        <p class="directive-text">
-          Generate a concept deck for our autonomous spatial designer agent with
-          interactive glassmorphism, responsive refraction nodes, and spectral
-          cyan illumination.
-        </p>
-      </section>
-
-      <!-- ══════════════════════════════════════════════
-         AGENT REASONING
-         ══════════════════════════════════════════════ -->
-      <section class="glass-panel reasoning-card">
-        <div class="reasoning-header">
-          <div class="reasoning-title">
-            <span>Agent Reasoning</span>
+            <button class="icon-btn small">
+              <span class="material-symbols-rounded">mic</span>
+            </button>
+            <button class="send-btn" id="sendBtn">
+              <span class="material-symbols-rounded">arrow_upward</span>
+            </button>
           </div>
-          <span class="material-symbols-rounded">expand_less</span>
-        </div>
 
-        <div class="reasoning-status">
-          <span class="dot green"></span> 3 steps completed · 0.38s
-        </div>
-
-        <div class="reasoning-steps">
-          <div class="step">
-            <span class="material-symbols-rounded step-icon">check_circle</span>
-            <div>
-              <strong>Deconstructed spatial vector matrix</strong>
-              <p>
-                Analyzed creative vector bounds and ambient dark illumination
-                anchors.
-              </p>
-            </div>
-          </div>
-          <div class="step">
-            <span class="material-symbols-rounded step-icon">check_circle</span>
-            <div>
-              <strong>Calibrated optical glass diffusion</strong>
-              <p>
-                Mapped spectral cyan/indigo gradient fringe tokens with
-                low-opacity obsidian backplates.
-              </p>
-            </div>
-          </div>
-          <div class="step">
-            <span class="material-symbols-rounded step-icon">check_circle</span>
-            <div>
-              <strong>Compiled interactive DOM blueprint</strong>
-              <p>
-                Synthesized live interactive canvas node hierarchy & volumetric
-                viewport telemetry.
-              </p>
-            </div>
+          <div class="prompt-footer">
+            <button class="pill dark">
+              <span class="material-symbols-rounded">network_node</span> Neural
+              Core v4.2
+            </button>
           </div>
         </div>
-      </section>
-
-      <!-- ══════════════════════════════════════════════
-         SPATIAL AGENT SYSTEM (Main Canvas)
-         ══════════════════════════════════════════════ -->
-      <section class="glass-panel system-card">
-        <div class="system-header">
-          <div class="system-title-row">
-            <span class="material-symbols-rounded system-icon">layers</span>
-            <span class="system-title">SpatialAgent_System_v1</span>
-          </div>
-          <span class="system-sub">DOM-WebGL Composite · Rev 03</span>
-        </div>
-
-        <div class="system-tags">
-          <span class="pill dark">1,420 tk</span>
-          <span class="pill gradient-pink">Flux-Reason</span>
-        </div>
-
-        <!-- Abstract Graphic Block -->
-        <div class="graphic-window">
-          <div class="window-header">
-            <span class="dot red"></span>
-            <span class="dot yellow"></span>
-            <span class="dot green-window"></span>
-            <span class="window-title">SPATIAL.NODE[01]</span>
-          </div>
-          <div class="window-body">
-            <div class="data-box">
-              <span class="label">Z-Index Locus</span>
-              <strong>+1,024</strong>
-            </div>
-            <div class="data-box">
-              <span class="label">Ray Tracing</span>
-              <strong class="cyan-text">120 FPS</strong>
-            </div>
-          </div>
-          <div class="window-footer">
-            <span
-              ><span class="material-symbols-rounded">visibility</span>
-              Real-time Render Optical Refraction: On</span
-            >
-            <div class="zoom-controls">
-              <button>+</button>
-              <span>100%</span>
-              <button>−</button>
-              <button>
-                <span class="material-symbols-rounded">fullscreen</span>
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <div class="system-metrics">
-          <span class="metric"
-            ><span class="material-symbols-rounded">grid_on</span> Refraction
-            1.48 IOR</span
-          >
-          <span class="metric"
-            ><span class="material-symbols-rounded">blur_on</span> Blur Depth
-            24px Opt</span
-          >
-          <span class="metric"
-            ><span class="material-symbols-rounded">high_quality</span> Fidelity
-            Native 4K</span
-          >
-        </div>
-
-        <div class="system-actions-grid">
-          <button class="btn btn-dark">
-            <span class="material-symbols-rounded">code</span> DOM
-          </button>
-          <button class="btn btn-dark">
-            <span class="material-symbols-rounded">download</span> Export
-          </button>
-          <button class="btn btn-dark">
-            <span class="material-symbols-rounded">fork_right</span> Fork
-          </button>
-          <button class="btn btn-primary">
-            <span class="material-symbols-rounded">tune</span> Refine
-          </button>
-        </div>
-      </section>
-
-      <!-- ══════════════════════════════════════════════
-         RECOMMENDED ITERATIONS
-         ══════════════════════════════════════════════ -->
-      <div class="iterations-header">
-        <span class="label"
-          ><span class="material-symbols-rounded">lightbulb</span> RECOMMENDED
-          ITERATIONS</span
-        >
-        <span class="text-muted">Tap to apply</span>
-      </div>
-
-      <div class="iterations-row">
-        <button class="pill action-pill">
-          <span class="material-symbols-rounded">flare</span> Add glass blur
-        </button>
-        <button class="pill action-pill">
-          <span class="material-symbols-rounded">contrast</span> Increase
-          contrast
-        </button>
-        <button class="pill action-pill">
-          <span class="material-symbols-rounded">ios_share</span> Export
-        </button>
-      </div>
-
-      <!-- ══════════════════════════════════════════════
-         PROMPT INPUT BAR
-         ══════════════════════════════════════════════ -->
-      <div class="prompt-bar">
-        <button class="prompt-icon">
-          <span class="material-symbols-rounded">add</span>
-        </button>
-        <input type="text" placeholder="Ask neutraX anything or describ..." />
-        <button class="prompt-icon">
-          <span class="material-symbols-rounded">mic</span>
-        </button>
-        <button class="prompt-submit">
-          <span class="material-symbols-rounded">arrow_upward</span>
-        </button>
-      </div>
-
-      <!-- ══════════════════════════════════════════════
-         BOTTOM NAVIGATION
-         ══════════════════════════════════════════════ -->
-      <nav class="bottom-nav">
-        <button class="nav-item active">
-          <span class="material-symbols-rounded">science</span>
-          <span>Studio</span>
-        </button>
-        <button class="nav-item">
-          <span class="material-symbols-rounded">smart_toy</span>
-          <span>Agents</span>
-        </button>
-        <button class="nav-item">
-          <span class="material-symbols-rounded">folder_open</span>
-          <span>Artifacts</span>
-        </button>
-        <button class="nav-item">
-          <span class="material-symbols-rounded">tune</span>
-          <span>Settings</span>
-        </button>
-      </nav>
+      </main>
     </div>
 
-    <script src="script.js"></script>
+    <script src="/script.js"></script>
   </body>
 </html>
