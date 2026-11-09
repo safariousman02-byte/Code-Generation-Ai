@@ -34,7 +34,6 @@
           <span class="material-symbols-rounded">close</span>
         </button>
       </div>
-
       <div class="drawer-content">
         <span class="label">Recent Sessions</span>
         <ul class="recent-list">
@@ -56,17 +55,7 @@
               <span>890 tk · 2 artifacts</span>
             </div>
           </li>
-          <li>
-            <div class="recent-icon">
-              <span class="material-symbols-rounded">smart_toy</span>
-            </div>
-            <div class="recent-info">
-              <strong>#02 Multi-agent Backend Orchestrator</strong>
-              <span>2,100 tk · 6 artifacts</span>
-            </div>
-          </li>
         </ul>
-
         <span class="label" style="margin-top: 24px">Telemetry & Memory</span>
         <div class="settings-list">
           <label class="toggle-row">
@@ -87,18 +76,26 @@
     <div class="app-container">
       <!-- TOP NAVIGATION -->
       <header class="topbar">
-        <button class="icon-btn" id="openDrawer">
-          <span class="material-symbols-rounded">menu</span>
+        <!-- Left: Drawer Toggle -->
+        <button class="icon-btn menu-btn" id="openDrawer">
+          <span class="material-symbols-rounded">history</span>
         </button>
 
+        <!-- Center/Left: Brand -->
         <div class="brand">
+          <div class="brand-logo">
+            <span class="material-symbols-rounded">blur_on</span>
+          </div>
           <span class="brand-name">neutra<span class="accent">X</span></span>
-          <span class="brand-sub">Spatial AI Agent</span>
         </div>
 
+        <!-- Right: Actions -->
         <div class="topbar-actions">
           <button class="btn btn-primary">
-            <span class="material-symbols-rounded">add</span> New
+            <span class="material-symbols-rounded" style="font-size: 16px"
+              >add</span
+            >
+            New
           </button>
           <button class="btn btn-secondary avatar-btn">
             <span class="material-symbols-rounded">person</span>
@@ -106,48 +103,55 @@
         </div>
       </header>
 
-      <!-- CENTERED WORKSPACE (Greeting & Prompt) -->
+      <!-- CENTERED WORKSPACE -->
       <main class="workspace">
         <!-- Greeting -->
         <div class="greeting">
           <div class="greeting-icon">
-            <span class="material-symbols-rounded">blur_on</span>
+            <span class="material-symbols-rounded">psychology</span>
           </div>
-          <h1>Hi Safari, how can I help you today!</h1>
+          <h1>Hi (user name), how can i<br />help you today!</h1>
         </div>
 
-        <!-- Chat History Area (Hidden until user sends a message) -->
+        <!-- Chat History Area (Hidden initially) -->
         <div class="chat-history" id="chatHistory"></div>
 
-        <!-- PROMPT DOCK (The Centerpiece) -->
+        <!-- PROMPT DOCK -->
         <div class="prompt-dock">
-          <div class="prompt-input-row">
-            <button class="icon-btn small">
-              <span class="material-symbols-rounded">add</span>
-            </button>
-            <button class="icon-btn small">
-              <span class="material-symbols-rounded">attachment</span>
-            </button>
+          <!-- Text Area -->
+          <textarea
+            id="userInput"
+            placeholder="Ask neutraX anything or describe an autonomous workflow..."
+            rows="2"
+          ></textarea>
 
-            <textarea
-              id="userInput"
-              placeholder="Ask neutraX anything or describe an autonomous workflow..."
-              rows="1"
-            ></textarea>
+          <!-- Action Row -->
+          <div class="prompt-actions">
+            <!-- Left Icons -->
+            <div class="actions-left">
+              <button class="icon-btn small">
+                <span class="material-symbols-rounded">add</span>
+              </button>
+              <button class="icon-btn small">
+                <span class="material-symbols-rounded">attachment</span>
+              </button>
+              <button class="model-pill">
+                <span class="material-symbols-rounded" style="font-size: 14px"
+                  >network_node</span
+                >
+                Neural Core v4.2
+              </button>
+            </div>
 
-            <button class="icon-btn small">
-              <span class="material-symbols-rounded">mic</span>
-            </button>
-            <button class="send-btn" id="sendBtn">
-              <span class="material-symbols-rounded">arrow_upward</span>
-            </button>
-          </div>
-
-          <div class="prompt-footer">
-            <button class="pill dark">
-              <span class="material-symbols-rounded">network_node</span> Neural
-              Core v4.2
-            </button>
+            <!-- Right Icons -->
+            <div class="actions-right">
+              <button class="icon-btn small">
+                <span class="material-symbols-rounded">graphic_eq</span>
+              </button>
+              <button class="send-btn" id="sendBtn">
+                <span class="material-symbols-rounded">arrow_upward</span>
+              </button>
+            </div>
           </div>
         </div>
       </main>
